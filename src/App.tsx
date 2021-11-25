@@ -1,51 +1,28 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './App.module.css';
-import Slider from './components/Slider/Slider';
-import Audio from './components/Audio/Audio';
-import ControlButtons from './components/ControlButtons/ControlButtons';
-
-const song: string = require('./Tanita_Tikaram_-_Twist_In_My_Sobriety_(musmore.com).mp3');
-
+import { Slider } from './components/Player/Slider';
+import { Audio } from './components/Player/Audio';
+import ControlButtons from './components/Player/ControlButtons';
+import { useDuration } from './hooks/useDuration';
+import { useCurrentTime } from './hooks/useCurrentTime';
 
 const App = () => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  const handlePlayPause = () => {
-    const previousValue = !isPlaying;
-    setIsPlaying(previousValue);
-    if (previousValue) {
-      audioRef.current?.pause();
-    }
-    if (!previousValue) {
-      audioRef.current?.play();
-    }
-  };
-  const onLoadedMetadata = () => {
-    if (audioRef.current) {
-      console.log('Duration ' + audioRef.current.duration);
-    }
-  };
-
-  // useEffect(() => {
-  //     if (isPlaying) {
-  //         audioRef.current.play();
-  //
-  //     } else {
-  //         audioRef.current.pause();
-  //     }
-  // }, [isPlaying]);
-
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const duration = useDuration(audioElement);
+  const currentTime = useCurrentTime(audioElement);
 
   return (
     <div className={styles.app_wrapper}>
       <div className={styles.container_player}>
-        <Slider />
-        <ControlButtons audioPlayer={audioRef} isPlaying={isPlaying} onClick={handlePlayPause} />
-        <Audio
-          src={song}
-          ref={audioRef}
-          onLoadedMetadata={onLoadedMetadata} />
+        <div>
+          {currentTime} - {duration}
+        </div>
+
+        <Audio ref={setAudioElement} />
+
+        <Slider duration={duration} currentTime={currentTime} audioElement={audioElement} />
+
+        <ControlButtons audioElement={audioElement} />
       </div>
     </div>
   );
