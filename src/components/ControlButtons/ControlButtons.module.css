@@ -1,0 +1,18 @@
+:root {
+    --white: #fff;
+}
+
+.controls path {
+    fill: var(--white);
+}
+.controls svg {
+    width: 26px;
+    height: 26px;
+}
+
+.controls {
+    margin: 50px auto;
+    width: 170px;
+    display: flex;
+    justify-content: space-between;
+}

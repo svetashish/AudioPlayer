@@ -1,0 +1,21 @@
+.slider {
+    display: inline;
+    -webkit-appearance: none;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.31);
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    cursor: pointer;
+}
