@@ -21,6 +21,11 @@ const App = () => {
             audioRef.current?.play();
         }
     }
+    const onLoadedMetadata = () => {
+        if (audioRef.current) {
+            console.log("Duration " + audioRef.current.duration);
+        }
+    };
 
     // useEffect(() => {
     //     if (isPlaying) {
@@ -37,7 +42,10 @@ const App = () => {
         <div className={styles.container_player}>
             <Slider />
             <ControlButtons audioPlayer={audioRef} isPlaying={isPlaying} onClick={handlePlayPause}/>
-            <Audio src={song} ref={audioRef} />
+            <Audio
+                src={song}
+                ref={audioRef}
+                onLoadedMetadata={onLoadedMetadata}/>
         </div>
       </div>
   );
